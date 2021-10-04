@@ -1,5 +1,5 @@
-const serverUrl = "http://127.0.0.1:5500/";
-const itemsPath = "mock/items.json";
+const serverUrl = "http://localhost:3000/";
+const itemsPath = "items/";
 const imagesPath = "img/";
 
 window.onload = getData();
