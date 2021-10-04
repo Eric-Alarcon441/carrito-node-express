@@ -13,13 +13,14 @@ db.once("open", () => console.log("Conectado a la BD"));
 // import routes
 const itemsRoutes = require("./routes/items");
 const imgRoutes = require("./routes/img");
-
+const paymentsIntentRoutes = require("./routes/paymentsintent");
 //middleware
 app.use(cors());
 app.use(express.json());
 
 app.use("/items", itemsRoutes);
 app.use("/img", imgRoutes);
+app.use("/create-payment-intent", paymentsIntentRoutes);
 
 //Rutas
 app.get("/", (req, res) => {

@@ -4,6 +4,14 @@ GET http://localhost:3000/
 GET http://localhost:3000/items
 
 ###
+GET http://localhost:3000/items/item
+Content-Type: application/json
+
+{
+    "itemId": "615a8cb953925f3581eb6da6"
+}
+
+###
 GET http://localhost:3000/img/pokemon-rojo.jpg
 
 ###
@@ -15,3 +23,15 @@ Content-Type: application/json
     "price": 6.99,
     "image": "sonic.jpg"
 }
+
+###
+
+POST http://localhost:3000/create-payment-intent HTTP/1.1
+Content-Type: application/json
+
+[
+    {
+        "id": "615a8cad53925f3581eb6da4",
+        "qty": 2
+    }
+]
