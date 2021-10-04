@@ -1,0 +1,17 @@
+GET http://localhost:3000/
+
+###
+GET http://localhost:3000/items
+
+###
+GET http://localhost:3000/img/pokemon-rojo.jpg
+
+###
+POST http://localhost:3000/items
+Content-Type: application/json
+
+{
+    "title": "Sonic",
+    "price": 6.99,
+    "image": "sonic.jpg"
+}
