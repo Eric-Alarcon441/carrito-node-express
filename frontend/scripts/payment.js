@@ -75,6 +75,7 @@ var payWithCard = function (stripe, card, clientSecret) {
         // Show error to your customer
         showError(result.error.message);
       } else {
+        saveOrderInDataBase();
         // The payment succeeded!
         orderComplete(result.paymentIntent.id);
       }
@@ -113,3 +114,26 @@ var loading = function (isLoading) {
     document.querySelector("#button-text").classList.remove("hidden");
   }
 };
+
+function saveOrderInDataBase() {
+  const email = document.getElementById("email-element").value;
+  const shoppingCart = localStorage.getItem("shoppingCart");
+
+  const dataToSend = {
+    email: email,
+    items: JSON.parse(shoppingCart),
+  };
+
+  fetch(`${serverUrl}order`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(dataToSend),
+  })
+    .then(function (result) {
+      return result.json();
+    })
+    .then((res) => console.log(res))
+    .then((shoppingCartItemsContainer.innerHTML = ""));
+}
