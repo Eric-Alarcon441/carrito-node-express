@@ -4,7 +4,6 @@ document.addEventListener("click", (event) => {
   }
 });
 
-
 const comprarButton = document.querySelector(".comprarButton");
 comprarButton.addEventListener("click", comprarButtonClicked);
 
@@ -19,11 +18,12 @@ function addToCartClicked(event) {
   const itemTitle = item.querySelector(".item-title").textContent;
   const itemPrice = item.querySelector(".item-price").textContent;
   const itemImage = item.querySelector(".item-image").src;
+  const itemId = item.dataset.id;
 
-  addItemToShoppingCart(itemTitle, itemPrice, itemImage);
+  addItemToShoppingCart(itemTitle, itemPrice, itemImage, itemId);
 }
 
-function addItemToShoppingCart(itemTitle, itemPrice, itemImage) {
+function addItemToShoppingCart(itemTitle, itemPrice, itemImage, itemId) {
   const elementsTitle = shoppingCartItemsContainer.getElementsByClassName(
     "shoppingCartItemTitle"
   );
@@ -43,7 +43,7 @@ function addItemToShoppingCart(itemTitle, itemPrice, itemImage) {
 
   const shoppingCartRow = document.createElement("div");
   const shoppingCartContent = `
-  <div class="row shoppingCartItem">
+  <div class="row shoppingCartItem" data-id= ${itemId}>
         <div class="col-6">
             <div class="shopping-cart-item d-flex align-items-center h-100 border-bottom pb-2 pt-3">
                 <img src=${itemImage} class="shopping-cart-image">
@@ -115,6 +115,34 @@ function quantityChanged(event) {
 }
 
 function comprarButtonClicked() {
-  shoppingCartItemsContainer.innerHTML = "";
+  const shoppingCartItems = getItemsInShoppingCart();
+  addtolocalstorage("shoppingCart", shoppingCartItems);
+
   updateShoppingCartTotal();
+}
+
+function getItemsInShoppingCart() {
+  const shoppingCartItems = document.querySelectorAll(".shoppingCartItem");
+  const arrShoppingCartItems = [];
+
+  shoppingCartItems.forEach((shoppingCartItem) => {
+    const shoppingCartItemQuantityElement = shoppingCartItem.querySelector(
+      ".shoppingCartItemQuantity"
+    );
+    const shoppingCartItemQuantity = Number(
+      shoppingCartItemQuantityElement.value
+    );
+    const itemId = shoppingCartItem.dataset.id;
+    const item = {
+      id: itemId,
+      qty: shoppingCartItemQuantity,
+    };
+    arrShoppingCartItems.push(item);
+  });
+
+  return arrShoppingCartItems;
+}
+
+function addtolocalstorage(key, items) {
+  localStorage.setItem(key, JSON.stringify(items));
 }
